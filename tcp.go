@@ -19,12 +19,13 @@ type TcpClient struct {
 
 func (c *TcpClient) Connect() (DataChannel, error) {
 	cc, err := net.Dial("tcp", c.addr)
-	ctcp, _ := cc.(*net.TCPConn)
 	if err != nil {
-		lg.Debug("TCP connection failed", zap.String("remote", cc.RemoteAddr().String()))
+		lg.Debug("TCP connection failed")
+		return nil, err
 	} else {
 		lg.Debug("TCP connected", zap.String("remote", cc.RemoteAddr().String()))
 	}
+	ctcp, _ := cc.(*net.TCPConn)
 	return ctcp, err
 }
 
